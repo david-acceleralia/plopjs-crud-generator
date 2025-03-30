@@ -1,0 +1,41 @@
+// plop-templates/crud/model.js.hbs
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const {{pascalCase name}}Schema = new Schema({
+  // Define aquí los campos de tu modelo
+  name: {
+    type: String,
+    required: [true, 'El nombre es obligatorio'],
+    trim: true,
+  },
+  // Ejemplo: añadir campos createdAt y updatedAt automáticamente
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+      type: Date,
+      default: Date.now
+  }
+}, {
+    timestamps: true // O usa la opción timestamps de Mongoose
+});
+
+// Middleware para actualizar 'updatedAt' antes de guardar (si no usas timestamps: true)
+/*
+{{pascalCase name}}Schema.pre('save', function(next) {
+    this.updatedAt = Date.now();
+    next();
+});
+*/
+
+// Middleware para actualizar 'updatedAt' antes de findOneAndUpdate (si no usas timestamps: true)
+/*
+{{pascalCase name}}Schema.pre('findOneAndUpdate', function(next) {
+  this.set({ updatedAt: new Date() });
+  next();
+});
+*/
+
+module.exports = mongoose.model('{{pascalCase name}}', {{pascalCase name}}Schema);

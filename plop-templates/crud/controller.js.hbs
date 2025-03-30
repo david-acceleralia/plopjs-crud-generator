@@ -1,0 +1,68 @@
+// plop-templates/crud/controller.js.hbs
+const {{pascalCase name}} = require('../models/{{pascalCase name}}.model');
+
+// Crear un nuevo {{name}}
+exports.create{{pascalCase name}} = async (req, res) => {
+  try {
+    const new{{pascalCase name}} = new {{pascalCase name}}(req.body);
+    const saved{{pascalCase name}} = await new{{pascalCase name}}.save();
+    res.status(201).json(saved{{pascalCase name}});
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Obtener todos los {{plural name}}
+exports.getAll{{pascalCase (plural name)}} = async (req, res) => {
+  try {
+    const {{plural name}} = await {{pascalCase name}}.find();
+    res.status(200).json({{plural name}});
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Obtener un {{name}} por ID
+exports.get{{pascalCase name}}ById = async (req, res) => {
+  try {
+    const {{camelCase name}} = await {{pascalCase name}}.findById(req.params.id);
+    if (!{{camelCase name}}) {
+      return res.status(404).json({ message: '{{pascalCase name}} no encontrado' });
+    }
+    res.status(200).json({{camelCase name}});
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// Actualizar un {{name}} por ID
+exports.update{{pascalCase name}} = async (req, res) => {
+  try {
+    const updated{{pascalCase name}} = await {{pascalCase name}}.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true } // Devuelve el documento actualizado y corre validaciones
+    );
+    if (!updated{{pascalCase name}}) {
+      return res.status(404).json({ message: '{{pascalCase name}} no encontrado para actualizar' });
+    }
+    res.status(200).json(updated{{pascalCase name}});
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Eliminar un {{name}} por ID
+exports.delete{{pascalCase name}} = async (req, res) => {
+  try {
+    const deleted{{pascalCase name}} = await {{pascalCase name}}.findByIdAndDelete(req.params.id);
+    if (!deleted{{pascalCase name}}) {
+      return res.status(404).json({ message: '{{pascalCase name}} no encontrado para eliminar' });
+    }
+    // Puedes devolver el objeto eliminado o solo un mensaje de éxito
+    res.status(200).json({ message: '{{pascalCase name}} eliminado correctamente', item: deleted{{pascalCase name}} });
+    // O res.status(204).send(); // No Content
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

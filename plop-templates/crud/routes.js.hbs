@@ -1,0 +1,23 @@
+// plop-templates/crud/routes.js.hbs
+const express = require('express');
+const router = express.Router();
+const {{camelCase name}}Controller = require('../controllers/{{camelCase name}}.controller');
+
+// Crear un nuevo {{name}}
+router.post('/', {{camelCase name}}Controller.create{{pascalCase name}});
+
+// Obtener todos los {{plural name}}
+router.get('/', {{camelCase name}}Controller.getAll{{pascalCase (plural name)}});
+
+// Obtener un {{name}} por ID
+router.get('/:id', {{camelCase name}}Controller.get{{pascalCase name}}ById);
+
+// Actualizar un {{name}} por ID
+router.put('/:id', {{camelCase name}}Controller.update{{pascalCase name}});
+// O usa PATCH si prefieres actualizaciones parciales
+// router.patch('/:id', {{camelCase name}}Controller.update{{pascalCase name}});
+
+// Eliminar un {{name}} por ID
+router.delete('/:id', {{camelCase name}}Controller.delete{{pascalCase name}});
+
+module.exports = router;
