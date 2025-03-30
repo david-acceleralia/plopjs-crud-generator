@@ -1,0 +1,1 @@
+# plopjs-crud-generator
